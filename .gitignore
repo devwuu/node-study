@@ -1,0 +1,10 @@
+### PureScript template
+# Dependencies
+node_modules
+
+# Generated files
+.psci
+output
+
+package-lock.json
+.idea

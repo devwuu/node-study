@@ -8,7 +8,8 @@
     "dev": "ts-node ./src/app.ts",
     "inter": "ts-node ./src/interface-study.ts",
     "func": "ts-node ./src/function-study.ts",
-    "enums": "ts-node ./src/enums-study.ts"
+    "enums": "ts-node ./src/enums-study.ts",
+    "types": "ts-node ./src/type-study.ts"
   },
   "keywords": [],
   "author": "",

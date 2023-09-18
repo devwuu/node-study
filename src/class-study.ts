@@ -65,3 +65,7 @@ let backendDev = new BackendDev();
 // let female = new Female(); 추상클래스는 생성자를 직접 사용할 수 없다
 let female:Female = new BackendDev();
 backendDev.printName();
+
+export {
+
+}

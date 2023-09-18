@@ -75,3 +75,7 @@ class NotEmpty<T> {
 let numbers : NotEmpty<number> = new NotEmpty();
 let stringss : NotEmpty<string> = new NotEmpty();
 // numbers = stringss;  // T 타입의 속성이 있기 때문에 에러가 발생한다
+
+export {
+
+}

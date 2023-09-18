@@ -92,8 +92,8 @@ printLevel("Error"); // "Error"key의 value인 e 출력
 // 유니온 타입을 사용할 때 주의할 점
 
 class Dev {
-    position :string;
-    gender : string;
+    position! :string;
+    gender! : string;
 }
 
 
@@ -123,4 +123,8 @@ function printValue(obj : Person | Dev):void{
 // console.log(obj.position); 에서 에러가 발생하게 된다
 function isDevType(obj : any): obj is Dev{
     return obj.position !== undefined;
+}
+
+export {
+
 }

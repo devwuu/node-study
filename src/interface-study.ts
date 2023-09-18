@@ -174,3 +174,8 @@ let iceWine = ():Wine => {
 
 console.log(iceWine().brand);
 iceWine().isDelicious();
+
+
+export {
+
+}

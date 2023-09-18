@@ -81,3 +81,7 @@ let obj = {
 
 console.log(getProperty(obj, "name"));
 // console.log(getProperty(obj, "age")); // age는 obj의 속성이름 중에 없기 때문에 에러가 발생한다
+
+export {
+
+}

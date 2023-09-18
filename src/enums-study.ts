@@ -85,3 +85,7 @@ enum Studys {
 
 let tyKey = Studys.typestript;
 // console.log(Studys[tyKey]); index(숫자)가 아니라서 접근 불가
+
+export {
+
+}

@@ -30,3 +30,7 @@ const developer = ( a : Person ) => {
 }
 
 developer({age: 10, name:"길동"});
+
+export {
+
+}

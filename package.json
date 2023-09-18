@@ -12,7 +12,8 @@
     "types": "ts-node ./src/type-study.ts",
     "classes": "ts-node ./src/class-study.ts",
     "generics": "ts-node ./src/generic-study.ts",
-    "tpyeinfer": "ts-node ./src/type-inference-stufy.ts"
+    "tpyeinfer": "ts-node ./src/type-inference-stufy.ts",
+    "tpyealias": "ts-node ./src/type-alias-study.ts"
   },
   "keywords": [],
   "author": "",

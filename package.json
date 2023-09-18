@@ -10,7 +10,8 @@
     "func": "ts-node ./src/function-study.ts",
     "enums": "ts-node ./src/enums-study.ts",
     "types": "ts-node ./src/type-study.ts",
-    "classes": "ts-node ./src/class-study.ts"
+    "classes": "ts-node ./src/class-study.ts",
+    "generics": "ts-node ./src/generic-study.ts"
   },
   "keywords": [],
   "author": "",

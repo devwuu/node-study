@@ -1,0 +1,30 @@
+{
+  "name": "ts-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node ./src/app.ts",
+    "inter": "ts-node ./src/interface-study.ts",
+    "func": "ts-node ./src/function-study.ts",
+    "enums": "ts-node ./src/enums-study.ts",
+    "types": "ts-node ./src/type-study.ts",
+    "classes": "ts-node ./src/class-study.ts",
+    "generics": "ts-node ./src/generic-study.ts",
+    "tpyeinfer": "ts-node ./src/type-inference-stufy.ts",
+    "tpyealias": "ts-node ./src/type-alias-study.ts",
+    "tpyeassertion": "ts-node ./src/type-assertion-study.ts",
+    "usages": "ts-node ./src/usage-study.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.6.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

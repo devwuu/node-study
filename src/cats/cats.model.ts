@@ -5,7 +5,7 @@ export type Cat = {
     friends: string[]
 };
 
-export const cats: Cat[] = [
+export let cats: Cat[] = [
     {
         id: "a1",
         name: "cat1",

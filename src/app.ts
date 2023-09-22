@@ -1,18 +1,19 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { cats } from './app.model';
+import {Cat, cats} from './app.model';
 
 const app: express.Express = express();
 const port: number = 8000;
 
 app.use(bodyParser.urlencoded({extended: true}))
+// json body를 읽을 수 있도록 미들웨어 추가
 app.use(bodyParser.json());
 
 // 미들웨어로서의 express
-app.use((req, res, next)=>{
-    console.log("This is middleware");
-    next(); // request 와 mapping 되는 router를 실행합니다
-})
+// app.use((req, res, next)=>{
+//     console.log("This is middleware");
+//     next(); // request 와 mapping 되는 router를 실행합니다
+// })
 // 출력 순서
 // This is middleware
 // This is router...
@@ -30,19 +31,51 @@ app.get('/cats/a2', (req: express.Request, res: express.Response, next) => {
 // routers ==> Spring의 Request Mapping
 // get(url: /) 요청하면 응답은...
 app.get('/', (req: express.Request, res: express.Response) => {
-    console.log("This is router...")
-    res.send({ cats }); // 응답
+    res.send("hello cats world!"); // 응답
 });
 
-app.get('/cats/a1', (req: express.Request, res:express.Response) => {
-    console.log("This is router...")
-    res.send( cats.find(c=> c.id === 'a1') );
+// 전체 고양이 조회
+app.get('/cats', (req: express.Request, res: express.Response)=> {
+    try {
+        const response : Cat[] = cats;
+        res.status(200).send({
+            status: "success",
+            cats : response
+        });
+   }catch (e: any){
+        res.status(500).send({
+            status: "fail",
+            message: e.message
+        })
+    }
 })
 
-app.get('/cats/a2', (req: express.Request, res:express.Response) => {
-    console.log("This is router...")
-    res.send( cats.find(c=> c.id === 'a2') );
-})
+// 특정 고양이 데이터 조회
+// 동적 라우팅 :paramName , req.params.paramName
+app.get('/cats/:id', (req: express.Request, res:express.Response) => {
+    res.status(200)
+        .send( cats.find(c=> c.id === req.params.id) );
+});
+
+// 고양이 create
+app.post('/cats', (req: express.Request, res: express.Response) =>{
+    try {
+        cats.push(req.body);
+        console.log('cats', cats);
+        res.status(201)
+            .send({
+                status: "success",
+                cat: req.body
+            })
+    }catch (e: any) {
+        res.status(500)
+            .send({
+            status: "fail",
+            message: e.message
+        });
+    }
+});
+
 
 // app.use((req, res, next)=>{
 //     console.log("This is middleware");
@@ -53,8 +86,9 @@ app.get('/cats/a2', (req: express.Request, res:express.Response) => {
 // 미들웨어는 코드 위치가 중요하다!
 
 // 미들 웨어를 제일 마지막에 넣어두면 에러 처리할 때 사용할 수도 있다.
+// 404
 app.use((req, res, next)=>{
-    console.log("Roter is Not exist");
+    console.log("Router is Not exist");
     res.send("Not found").status(404);
 })
 

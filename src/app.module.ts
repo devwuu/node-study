@@ -9,10 +9,12 @@ import { UsersModule } from './users/users.module';
 
 // import ?
 // (1) 다양한 모듈을 app 모듈에서 합쳐서 하나의 애플리케이션으로 서비스 된다
-// (2) exports 된 다른 모듈을 현재 모듈에서 사용할 수 있다 ( 이렇게 해야 service 등을 주입받을 수 있다)
+// (2) exports 된 다른 모듈을 현재 모듈에서 사용할 수 있다 ( 이렇게 해야 남의 service 등을 주입받을 수 있다)
 @Module({
   imports: [CatsModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
+  // 자기 모듈이 아닌 곳에 있는 service는 Provider에 바로 때려박는 게 아님
+  // 내 프로바이더에는 내 프로바이더만 작성한다. (단일 책임의 원칙)
 })
 export class AppModule {}

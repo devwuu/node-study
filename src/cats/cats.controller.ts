@@ -5,7 +5,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
-  Param,
+  Param, ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -23,9 +23,13 @@ export class CatsController {
     return 'find all';
   }
   @Get('/:id')
-  @UseFilters(HttpExceptionFilter) // 필터는 특정 메서드에만 적용할 수 있다
-  findById(@Param('id') id: string){
-    throw new HttpException('API IS BROKEN', HttpStatus.FORBIDDEN);
+  // @UseFilters(HttpExceptionFilter) // 필터는 특정 메서드, 특정 컨트롤러에만 적용할 수도 있다
+  findById(@Param('id', ParseIntPipe) id: number){
+
+    // Pipe는 자동으로 형변환 및 validation을 해줍니다
+    console.log(typeof id);
+
+    // throw new HttpException('API IS BROKEN', HttpStatus.FORBIDDEN);
     // 에러 처리를 할 때 보통 이 에렇게 많이 사용합니다. 여기서 status는 http code
     return 'find By id';
   }

@@ -2,7 +2,7 @@ import { Logger, MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module'; // 각 도메인 별로 모듈을 따로 만든다.
-import { LoggerMiddleware } from './logger/logger.middleware';
+import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware';
 
 // Nestjss는 모든 파일이 거의 모듈화가 되어 있다. 따라서 각 모듈을 등록해서 사용하게 돼있음
 // 의존성 주입이 돼야 하는 것들이 등록되는 부분이 providers 이다

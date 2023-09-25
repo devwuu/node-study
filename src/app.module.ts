@@ -6,6 +6,7 @@ import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware'
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import * as process from "process";
+import * as mongoose from 'mongoose';
 
 // Nestjss는 모든 파일이 거의 모듈화가 되어 있다. 따라서 각 모듈을 등록해서 사용하게 돼있음
 // 의존성 주입이 돼야 하는 것들이 등록되는 부분이 providers 이다
@@ -26,9 +27,11 @@ import * as process from "process";
   // 내 프로바이더에는 내 프로바이더만 작성한다. (단일 책임의 원칙)
 })
 export class AppModule implements NestModule {
+  private readonly isDev: boolean = process.env.MODE === 'DEV';
   configure(consumer: MiddlewareConsumer): any {
     consumer.apply(LoggerMiddleware).forRoutes('cats');
     // * 같은 와일드 카드도 사용 가능, 특정 메서드에만 적용도 가능
     // 여기서는 cats/* 이하 모든 라우터에 미들웨어가 적용된다
+    if (this.isDev) mongoose.set('debug', true); // 쿼리 로깅
   }
 }

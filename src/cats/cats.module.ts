@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
 import { CatsController } from './cats.controller';
 import { CatsService } from './cats.service';
+import { MongooseModule } from "@nestjs/mongoose";
+import { Cat, CatSchema } from "./cats.schema";
 
 // 각 도메인 별로 모듈을 만들고 그 모듈에 별도로 컨트롤러와 서비스 등을 등록한다
 @Module({
+  imports: [
+    MongooseModule.forFeature([
+      {name: Cat.name, schema: CatSchema}
+    ])
+  ],
   controllers: [CatsController],
   providers: [CatsService], // DI 할 모듈. 여기에 등록 해야 DI 받을 수 있다. (내 모듈에 있는 Provider를 적는 것임)
   // 자기 모듈이 아닌 곳에 있는 service는 Provider에 바로 때려박는 게 아님

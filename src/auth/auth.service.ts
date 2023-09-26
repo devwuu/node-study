@@ -15,7 +15,7 @@ export class AuthService {
     const { email, password } = data;
 
     const cat = await this.catsRepository.findByEmail(email);
-    if (cat === null) throw new HttpException('Not Exist Cat', 403);
+    if (!cat) throw new HttpException('Not Exist Cat', 403);
 
     // 첫번째 인자: 평문, 두번째 인자: 암호화
     const isPasswordValidate: boolean = await bcrypt.compare(

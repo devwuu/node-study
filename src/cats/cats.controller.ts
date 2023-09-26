@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { SuccessInterceptor } from '../common/interceptors/success.interceptor';
 import { CatsRequestDto } from './dto/cats.request.dto';
@@ -6,6 +14,9 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CatResponseDto } from './dto/cat.response.dto';
 import { AuthService } from '../auth/auth.service';
 import { LoginRequestDto } from '../auth/dto/login.request.dto';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
+import { Request } from 'express';
+import { CurrentUser } from '../common/decorators/user.decorator';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -18,9 +29,10 @@ export class CatsController {
   @ApiOperation({
     summary: '현재 고양이 가져오기',
   })
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findCurrentCat() {
-    return 'find current cat';
+  findCurrentCat(@CurrentUser() cat) {
+    return cat;
   }
 
   @ApiOperation({
@@ -50,13 +62,13 @@ export class CatsController {
     return this.authService.login(data);
   }
 
-  @ApiOperation({
-    summary: '로그아웃',
-  })
-  @Post('/logout')
-  logout() {
-    return 'logout';
-  }
+  // @ApiOperation({
+  //   summary: '로그아웃',
+  // })
+  // @Post('/logout')
+  // logout() {
+  //   return 'logout';
+  // }
 
   @ApiOperation({
     summary: '고양이 이미지 업로드',

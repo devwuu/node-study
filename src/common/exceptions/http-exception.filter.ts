@@ -1,4 +1,9 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Catch(HttpException)
@@ -17,13 +22,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     // 분기처리해서 나눠서 처리해줄 수도 있음
 
     // send를 할건데 json으로 보낼거니까 json으로 한정지어준다
-    response.status(exception.status)
-    .json({
+    response.status(exception.status).json({
       status: exception.status,
       timestamp: new Date().toISOString(),
       path: request.url,
       message: exception.message,
-      error: [...error?.message],
+      error,
     });
   }
 }

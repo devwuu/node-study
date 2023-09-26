@@ -25,4 +25,10 @@ export class CatsRepository {
     return saved.readonlyData;
     // 객체 필드 구조가 동일하기 때문에 꼭 타입이 정확하게 일치하지 않아도 됨. 타입스크립트에서 추론해서 맞는 걸로 봄
   }
+
+  async findByEmail(email: string): Promise<Cat | null> {
+    // 스키마를 바로 return 해줘도 괜찮나?
+    const find = await this.catModel.findOne({ email });
+    return find;
+  }
 }

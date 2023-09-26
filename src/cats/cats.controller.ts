@@ -1,26 +1,25 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseInterceptors
-} from "@nestjs/common";
+import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { SuccessInterceptor } from "../common/interceptors/success.interceptor";
-import { CatsRequestDto } from "./dto/cats.request.dto";
-import { ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { CatResponseDto } from "./dto/cat.response.dto";
+import { SuccessInterceptor } from '../common/interceptors/success.interceptor';
+import { CatsRequestDto } from './dto/cats.request.dto';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { CatResponseDto } from './dto/cat.response.dto';
+import { AuthService } from '../auth/auth.service';
+import { LoginRequestDto } from '../auth/dto/login.request.dto';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
 export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
+  constructor(
+    private readonly catsService: CatsService,
+    private readonly authService: AuthService,
+  ) {}
 
   @ApiOperation({
     summary: '현재 고양이 가져오기',
   })
   @Get()
-  findCurrentCat(){
+  findCurrentCat() {
     return 'find current cat';
   }
 
@@ -37,7 +36,7 @@ export class CatsController {
     type: CatResponseDto,
   })
   @Post()
-  async signUp(@Body() body: CatsRequestDto){
+  async signUp(@Body() body: CatsRequestDto) {
     console.log('body', body);
     const saved = await this.catsService.signUp(body);
     return saved;
@@ -47,15 +46,15 @@ export class CatsController {
     summary: '로그인',
   })
   @Post('/login')
-  login(){
-    return 'login';
+  login(@Body() data: LoginRequestDto) {
+    return this.authService.login(data);
   }
 
   @ApiOperation({
     summary: '로그아웃',
   })
   @Post('/logout')
-  logout(){
+  logout() {
     return 'logout';
   }
 
@@ -63,8 +62,7 @@ export class CatsController {
     summary: '고양이 이미지 업로드',
   })
   @Post('/upload')
-  saveImg(){
+  saveImg() {
     return 'save new img';
   }
-
 }

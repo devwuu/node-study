@@ -52,7 +52,7 @@ export class Cat extends Document {
   })
   @IsString()
   @IsOptional()
-  imgUrl: string;
+  imgUrl?: string;
 
   // 실제 db에 존재하는 컬럼은 아닌 가상 필드
   // virtual 함수로 만든다

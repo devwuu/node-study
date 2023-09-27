@@ -3,7 +3,8 @@ import {
   Controller,
   Get,
   Post,
-  Req,
+  UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -15,8 +16,9 @@ import { CatResponseDto } from './dto/cat.response.dto';
 import { AuthService } from '../auth/auth.service';
 import { LoginRequestDto } from '../auth/dto/login.request.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
-import { Request } from 'express';
 import { CurrentUser } from '../common/decorators/user.decorator';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from '../common/utils/multer.options';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -74,7 +76,14 @@ export class CatsController {
     summary: '고양이 이미지 업로드',
   })
   @Post('/upload')
-  saveImg() {
-    return 'save new img';
+  @UseGuards(JwtAuthGuard) // 로그인된 사용자만 이용 가능
+  // @UseInterceptors(FilesInterceptor('image', 10, multerOptions('cats'))) // 다중 파일 업로드
+  @UseInterceptors(FileInterceptor('image', multerOptions('cats'))) // 단일 파일 업로드
+  saveImg(
+    @CurrentUser() cat: CatsRequestDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    console.log('saved...', file);
+    return this.catsService.uploadImg(cat, file);
   }
 }

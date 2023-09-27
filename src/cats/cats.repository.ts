@@ -37,4 +37,15 @@ export class CatsRepository {
     // .select('-password'); 를 사용하면 원하는 컬럼만 선택해서 혹은 선택하지 않고 가져올 수 있다
     return find.readonlyData;
   }
+
+  async updateImage(
+    cat: CatsRequestDto,
+    file: Express.Multer.File,
+  ): Promise<CatResponseDto | null> {
+    const find = await this.catModel.findOne({ email: cat.email });
+    if (find === null) throw new HttpException('NOT EXIST CAT', 403);
+    find.imgUrl = `http://localhost:8000/media/cats/${file.filename}`;
+    find.save();
+    return find.readonlyData;
+  }
 }

@@ -48,4 +48,9 @@ export class CatsRepository {
     find.save();
     return find.readonlyData;
   }
+
+  async findAll(): Promise<CatResponseDto[] | null> {
+    const cats = await this.catModel.find();
+    return cats.map((c) => c.readonlyData);
+  }
 }

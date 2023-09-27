@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CatsRequestDto } from './dto/cats.request.dto';
 import * as bcrypt from 'bcrypt';
 import { CatsRepository } from './cats.repository';
+import { CatResponseDto } from './dto/cat.response.dto';
 
 @Injectable() // provider 에 붙는 데코레이터
 export class CatsService {
@@ -26,5 +27,9 @@ export class CatsService {
 
   uploadImg(cat: CatsRequestDto, file: Express.Multer.File) {
     return this.catsRepository.updateImage(cat, file);
+  }
+
+  async findAll(): Promise<CatResponseDto[]> {
+    return await this.catsRepository.findAll();
   }
 }

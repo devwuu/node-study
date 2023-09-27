@@ -36,6 +36,13 @@ export class CatsController {
   findCurrentCat(@CurrentUser() cat) {
     return cat;
   }
+  @ApiOperation({
+    summary: '모든 고양이 가져오기',
+  })
+  @Get('/all')
+  findCats() {
+    return this.catsService.findAll();
+  }
 
   @ApiOperation({
     summary: '회원가입',

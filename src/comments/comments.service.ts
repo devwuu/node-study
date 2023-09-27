@@ -19,7 +19,7 @@ export class CommentsService {
     const author = await this.catsRepository.findByIdWithoutPassword(cat.id);
     const { info, contents } = comment;
     const target = await this.catsRepository.findByIdWithoutPassword(info);
-    if (!author || !info) throw new HttpException('Not Exist Cat', 403);
+    if (!author || !target) throw new HttpException('Not Exist Cat', 403);
     const saved = await this.commentsRepository.save(author, {
       info: target.id,
       contents,

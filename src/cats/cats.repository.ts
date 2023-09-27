@@ -37,7 +37,7 @@ export class CatsRepository {
   ): Promise<CatResponseDto | null> {
     const find = await this.catModel.findById(id).select('-password');
     // .select('-password'); 를 사용하면 원하는 컬럼만 선택해서 혹은 선택하지 않고 가져올 수 있다
-    return find.readonlyData;
+    return find?.readonlyData;
   }
 
   async updateImage(

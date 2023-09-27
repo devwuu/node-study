@@ -13,6 +13,8 @@ export class CommentsService {
 
   async findAll() {}
 
+  // 데이터 타입 고민해보기...
+  // cat id 타입이 어디는 tpye.objectId고 어디는 string이라 통일성이 없음
   async save(cat, comment: CommentsCreateDto) {
     const author = await this.catsRepository.findByIdWithoutPassword(cat.id);
     const { info, contents } = comment;

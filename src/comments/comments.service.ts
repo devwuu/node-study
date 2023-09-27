@@ -21,7 +21,7 @@ export class CommentsService {
     const target = await this.catsRepository.findByIdWithoutPassword(info);
     if (!author || !info) throw new HttpException('Not Exist Cat', 403);
     const saved = await this.commentsRepository.save(author, {
-      info: new mongoose.Types.ObjectId(target.id),
+      info: target.id,
       contents,
     });
     return saved;

@@ -21,7 +21,7 @@ export class Comment extends Document {
     required: true,
     ref: 'cats',
   })
-  author: Types.ObjectId;
+  author: string;
   // 몽고디비에서 타입은 Types.ObjectId 이지만 핸들링하기 편하게 string 으로 파싱해준다
   // id는 몽고디비에서 무결성을 지키기 위해 Types.ObjectId 으로 자동으로 관리해주는 id
 
@@ -35,7 +35,7 @@ export class Comment extends Document {
   })
   @IsNotEmpty()
   @IsString()
-  info: Types.ObjectId;
+  info: string;
 
   @ApiProperty({
     required: true,

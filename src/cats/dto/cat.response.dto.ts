@@ -1,5 +1,6 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Cat } from '../cats.schema';
+import { Types } from 'mongoose';
 
 export class CatResponseDto extends PickType(Cat, [
   'email',

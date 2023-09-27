@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cat } from './cats.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CatResponseDto } from './dto/cat.response.dto';
 import { CatsRequestDto } from './dto/cats.request.dto';
 
@@ -32,7 +32,9 @@ export class CatsRepository {
     return find;
   }
 
-  async findByIdWithoutPassword(id: string): Promise<CatResponseDto | null> {
+  async findByIdWithoutPassword(
+    id: string | Types.ObjectId,
+  ): Promise<CatResponseDto | null> {
     const find = await this.catModel.findById(id).select('-password');
     // .select('-password'); 를 사용하면 원하는 컬럼만 선택해서 혹은 선택하지 않고 가져올 수 있다
     return find.readonlyData;

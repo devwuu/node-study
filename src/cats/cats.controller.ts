@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UploadedFile,
   UploadedFiles,
@@ -28,6 +29,13 @@ export class CatsController {
     private readonly authService: AuthService,
   ) {}
 
+  @ApiOperation({
+    summary: '특정 고양이 가져오기',
+  })
+  @Get('/:id')
+  find(@Param('id') id: string) {
+    return this.catsService.findById(id);
+  }
   @ApiOperation({
     summary: '현재 고양이 가져오기',
   })

@@ -3,9 +3,7 @@ import { Comment } from './comments.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CommentsCreateDto } from './dto/comments.create.dto';
-import { CatsRequestDto } from '../cats/dto/cats.request.dto';
 import { CatResponseDto } from '../cats/dto/cat.response.dto';
-import { CommentsResponseDto } from './dto/comments.response.dto';
 
 @Injectable()
 export class CommentsRepository {
@@ -28,9 +26,9 @@ export class CommentsRepository {
     return saved;
   }
 
-  async findAll(): Promise<CommentsResponseDto[] | null> {
+  async findAll(): Promise<Comment[] | null> {
     const all = await this.commentModel.find();
-    return all.map((c) => c.readonlyData);
+    return all;
   }
 
   async plusLike(id: string) {

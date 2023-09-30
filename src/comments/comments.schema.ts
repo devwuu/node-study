@@ -35,7 +35,7 @@ export class Comment extends Document {
   })
   @IsNotEmpty()
   @IsString()
-  info: string;
+  info: Types.ObjectId;
 
   @ApiProperty({
     required: true,

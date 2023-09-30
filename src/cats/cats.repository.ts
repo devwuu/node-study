@@ -1,13 +1,18 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cat } from './cats.schema';
-import { Model, Types } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { CatResponseDto } from './dto/cat.response.dto';
 import { CatsRequestDto } from './dto/cats.request.dto';
+import { Comment, CommentSchema } from '../comments/comments.schema';
 
 @Injectable()
 export class CatsRepository {
-  constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
+  constructor(
+    @InjectModel(Cat.name) private readonly catModel: mongoose.Model<Cat>,
+    @InjectModel(Comment.name)
+    private readonly commentModel: mongoose.Model<Comment>,
+  ) {}
 
   async existByEmail(email: string): Promise<boolean> {
     try {
@@ -33,7 +38,7 @@ export class CatsRepository {
   }
 
   async findByIdWithoutPassword(
-    id: string | Types.ObjectId,
+    id: string | mongoose.Types.ObjectId,
   ): Promise<CatResponseDto | null> {
     const find = await this.catModel.findById(id).select('-password');
     // .select('-password'); 를 사용하면 원하는 컬럼만 선택해서 혹은 선택하지 않고 가져올 수 있다
@@ -54,5 +59,12 @@ export class CatsRepository {
   async findAll(): Promise<CatResponseDto[] | null> {
     const cats = await this.catModel.find();
     return cats.map((c) => c.readonlyData);
+  }
+
+  async findById(id: string) {
+    const find = await this.catModel
+      .findById(id)
+      .populate({ path: 'comments', model: this.commentModel });
+    return find;
   }
 }

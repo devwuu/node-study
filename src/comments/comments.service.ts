@@ -2,7 +2,9 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CommentsCreateDto } from './dto/comments.create.dto';
 import { CommentsRepository } from './comments.repository';
 import { CatsRepository } from '../cats/cats.repository';
-import mongoose from 'mongoose';
+import { Comment } from './comments.schema';
+
+import mongoose, { Types } from 'mongoose';
 import { CommentsResponseDto } from './dto/comments.response.dto';
 
 @Injectable()
@@ -12,7 +14,7 @@ export class CommentsService {
     private readonly catsRepository: CatsRepository,
   ) {}
 
-  async findAll(): Promise<CommentsResponseDto[] | null> {
+  async findAll(): Promise<Comment[] | null> {
     return await this.commentsRepository.findAll();
   }
 
@@ -26,7 +28,7 @@ export class CommentsService {
     if (!author || !target) throw new HttpException('Not Exist Cat', 403);
     // author의 변조 가능성이 있기 때문에 굳이 DB에서 찾은 author를 사용하는 것이기도 함
     const saved = await this.commentsRepository.save(author, {
-      info: target.id,
+      info: new Types.ObjectId(target.id),
       contents,
     });
     return saved;

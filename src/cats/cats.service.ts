@@ -32,4 +32,8 @@ export class CatsService {
   async findAll(): Promise<CatResponseDto[]> {
     return await this.catsRepository.findAll();
   }
+
+  async findById(id: string) {
+    return await this.catsRepository.findById(id);
+  }
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { CurrentUser } from '../common/decorators/user.decorator';
@@ -29,7 +37,7 @@ export class CommentsController {
   @ApiOperation({
     summary: '좋아요 수 올리기',
   })
-  @Post('like/:id')
+  @Patch('like/:id')
   async plusLike(@Param('id') id: string) {
     return await this.commentService.plusLike(id);
   }

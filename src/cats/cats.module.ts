@@ -6,11 +6,15 @@ import { Cat, CatSchema } from './cats.schema';
 import { CatsRepository } from './cats.repository';
 import { AuthModule } from '../auth/auth.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { Comment, CommentSchema } from '../comments/comments.schema';
 
 // 각 도메인 별로 모듈을 만들고 그 모듈에 별도로 컨트롤러와 서비스 등을 등록한다
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Cat.name, schema: CatSchema }]),
+    MongooseModule.forFeature([
+      { name: Cat.name, schema: CatSchema },
+      { name: Comment.name, schema: CommentSchema },
+    ]),
     forwardRef(() => AuthModule),
     MulterModule.register({
       dest: './upload', // 파일을 저장할 위치 (defulat)

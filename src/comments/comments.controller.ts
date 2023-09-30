@@ -31,6 +31,6 @@ export class CommentsController {
   })
   @Post('like/:id')
   async plusLike(@Param('id') id: string) {
-    this.commentService.plusLike(id);
+    return await this.commentService.plusLike(id);
   }
 }

@@ -56,12 +56,21 @@ export class Comment extends Document {
   })
   @IsPositive()
   likeCount: number;
+
+  readonly readonlyData: {
+    id: string;
+    author: string;
+    info: string;
+    contents: string;
+    likeCount: number;
+  };
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
 
 CommentSchema.virtual('readonlyData').get(function (this: Comment) {
   return {
+    id: this.id,
     author: this.author.toString(),
     info: this.info.toString(),
     contents: this.contents,

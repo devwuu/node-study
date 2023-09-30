@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Comment } from './comments.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CommentsCreateDto } from './dto/comments.create.dto';
 import { CatsRequestDto } from '../cats/dto/cats.request.dto';
 import { CatResponseDto } from '../cats/dto/cat.response.dto';
+import { CommentsResponseDto } from './dto/comments.response.dto';
 
 @Injectable()
 export class CommentsRepository {
@@ -25,5 +26,18 @@ export class CommentsRepository {
 
     const saved = this.commentModel.create(newComment);
     return saved;
+  }
+
+  async findAll(): Promise<CommentsResponseDto[] | null> {
+    const all = await this.commentModel.find();
+    return all.map((c) => c.readonlyData);
+  }
+
+  async plusLike(id: string) {
+    const comment = await this.commentModel.findById(id);
+    if (!comment) throw new HttpException('Not Exist Comment', 400);
+    comment.likeCount += 1;
+    const saved = await comment.save();
+    return saved.readonlyData;
   }
 }

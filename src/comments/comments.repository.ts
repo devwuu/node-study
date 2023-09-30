@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CommentsCreateDto } from './dto/comments.create.dto';
 import { CatResponseDto } from '../cats/dto/cat.response.dto';
+import { CommentsResponseDto } from './dto/comments.response.dto';
 
 @Injectable()
 export class CommentsRepository {
@@ -26,7 +27,7 @@ export class CommentsRepository {
     return saved;
   }
 
-  async findAll(): Promise<Comment[] | null> {
+  async findAll(): Promise<CommentsResponseDto[] | null> {
     const all = await this.commentModel.find();
     return all;
   }

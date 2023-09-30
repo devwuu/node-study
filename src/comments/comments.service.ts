@@ -14,7 +14,7 @@ export class CommentsService {
     private readonly catsRepository: CatsRepository,
   ) {}
 
-  async findAll(): Promise<Comment[] | null> {
+  async findAll(): Promise<CommentsResponseDto[] | null> {
     return await this.commentsRepository.findAll();
   }
 

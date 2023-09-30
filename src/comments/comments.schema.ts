@@ -24,6 +24,12 @@ export class Comment extends Document {
   author: string;
   // 몽고디비에서 타입은 Types.ObjectId 이지만 핸들링하기 편하게 string 으로 파싱해준다
   // id는 몽고디비에서 무결성을 지키기 위해 Types.ObjectId 으로 자동으로 관리해주는 id
+  /**
+   * 보여줄 때만 stirng 으로 파싱해서 보여주는거지 데이터 검색하거나 저장할 때는 타입이 다르게 저장된다
+   * 따라서 string이면 string, Types.ObjectId면 id 이렇게 통일해서 데이터 타입을 관리해줘야 한다
+   * string으로 저장하고 Types.ObjectId로 검색하려고 하면 검색이 안됨
+   * (populate, findById 메서드를 쓸 때 예상하지 않은 오류가 발생할 수 있음.)
+   * */
 
   @ApiProperty({
     description: '작성 대상',

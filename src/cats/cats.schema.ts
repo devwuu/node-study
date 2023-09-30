@@ -64,6 +64,8 @@ export class Cat extends Document {
     name: string;
     imgUrl: string;
   };
+
+  readonly comments: Comment[];
 } // cat schema 정의
 
 const _CatSchema = SchemaFactory.createForClass(Cat); // 정의한 schema를 실제 스키마로 만든다
@@ -75,6 +77,7 @@ _CatSchema.virtual('readonlyData').get(function (this: Cat) {
     email: this.email,
     name: this.name,
     imgUrl: this.imgUrl,
+    comments: this.comments,
   }; // password 가 외부에 노출되지 않기 위해 password를 제외한 virtual field를 만들어준다
   // Document를 가리키는 this를 사용해야 하기 때문에 화살표 함수를 쓸 수 없음
 });
@@ -82,6 +85,7 @@ _CatSchema.virtual('readonlyData').get(function (this: Cat) {
 // comment와 데이터 조인을 위해 사용
 _CatSchema.virtual('comments', {
   // 가상 필드로 만들 이름을 정해준다
+  // readonly field와 이름을 맞춰준다
   ref: 'comments', // 스키마 이름
   localField: '_id',
   foreignField: 'info', // 외래 | 참조 필드

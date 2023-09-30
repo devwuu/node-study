@@ -65,6 +65,7 @@ export class CatsRepository {
     const find = await this.catModel
       .findById(id)
       .populate({ path: 'comments', model: this.commentModel });
+    // path는 cat 스키마에 정의해뒀던 가상 필드 이름
     return find;
   }
 }

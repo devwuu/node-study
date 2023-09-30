@@ -34,6 +34,7 @@ export class CatsService {
   }
 
   async findById(id: string) {
-    return await this.catsRepository.findById(id);
+    const find = await this.catsRepository.findById(id);
+    return find.readonlyData;
   }
 }

@@ -30,10 +30,6 @@ export class ChatsGateway
     @MessageBody() username: string, // client에서 보낸 메세지.
     @ConnectedSocket() socket: Socket, // 연결된 소켓. 연결이 끊기기 전까지는 동일한 id로 연결이 유지된다. 그래서 연결된 user를 식별할 수 있다
   ): Promise<string> {
-    // console.log(`username is... ${username}`);
-    // console.log(`socket id is... ${socket.id}`);
-    // socket.emit('hello_user', `hello, ${username}`); // client로 데이터 전송
-
     // 연결된 모든 소켓들에게 broadcating
     socket.broadcast.emit('user_connected', username);
     const saved = await this.socketsService.save({
@@ -45,18 +41,18 @@ export class ChatsGateway
   }
 
   @SubscribeMessage('submit_chat')
-  handleSubmitChat(@MessageBody() chat, @ConnectedSocket() socket: Socket) {
+  async handleSubmitChat(
+    @MessageBody() chat,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    const saved = await this.chatsService.save({ chat, user: socket.id });
     socket.broadcast.emit('new_chat', {
-      username: socket.id,
-      chat,
+      username: saved.user,
+      chat: saved.chat,
     });
   }
 
   // gateway life cycle
-  // constructor() {
-  //   this.logger.log('constructor...');
-  // }
-
   // OnGatewayInit 인터페이스 구현
   afterInit(server: any): any {
     this.logger.log('after init...');
@@ -70,6 +66,7 @@ export class ChatsGateway
   //OnGatewayDisconnect 인터페이스 구현
   async handleDisconnect(@ConnectedSocket() socket: Socket): Promise<void> {
     const username = await this.socketsService.delete(socket.id);
+    // 몽고디비는 왜래키 위반을 strict 하게 잡지 않기 때문에 유저만 날려도 괜찮다
     socket.broadcast.emit('user_disconnected', username);
     this.logger.log(`disconnected...${username}`); // client와 연결이 끊어진 이후에 실행됨.
   }

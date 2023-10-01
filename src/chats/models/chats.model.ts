@@ -14,7 +14,7 @@ export class Chats extends Document {
     // 타입을 하나 하나 정의해준다고 보면 됨
     type: {
       _id: { type: Types.ObjectId, required: true, ref: 'sockets' },
-      id: { type: String }, // socket.id
+      id: { type: String }, // socket.id 근데 저장은 안됨. required:true 인것만 저장
       username: { type: String, required: true }, // socket.username
     },
   })

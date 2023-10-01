@@ -4,6 +4,8 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 const options: SchemaOptions = {
   id: false,
+  // _id를 사용하지 않겠다. 근데 datadog으로 열어보니까 _id는 들어감. 이 model에서 사용하지 않겠다는 뜻인가???
+  // chats 에서 참조도 잘 된다
   timestamps: true,
   collection: 'sockets',
 };
@@ -26,7 +28,7 @@ export class Sockets extends Document {
   username: string;
 
   readonly readOnlyData: {
-    id: Types.ObjectId;
+    id: string;
     username: string;
   };
 }

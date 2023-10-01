@@ -24,8 +24,12 @@ export class ChatsGateway
   ): string {
     console.log(`username is... ${username}`);
     console.log(`socket id is... ${socket.id}`);
-    socket.emit('hello_user', `hello, ${username}`); // client로 데이터 전송
-    return 'hello anonymous user'; // client에서 new_user를 emit 시킨 함수의 callback 함수로 받을 수 있다
+    // socket.emit('hello_user', `hello, ${username}`); // client로 데이터 전송
+
+    // 연결된 모든 소켓들에게 broadcating
+    socket.broadcast.emit('user_connected', username);
+
+    return username; // client에서 new_user를 emit 시킨 함수의 callback 함수로 받을 수 있다
   }
 
   // gateway life cycle

@@ -32,7 +32,7 @@ function drawWelcomeBox(username) {
 function drawChatBox(message) {
   const wrapper = document.createElement('div');
   const chatBox = `
-  <div>
+   <div class='bg-gray-300 w-3/4 mx-4 my-2 p-2 rounded-lg clearfix break-all'>
     ${message}
   </div>`;
   wrapper.innerHTML = chatBox;

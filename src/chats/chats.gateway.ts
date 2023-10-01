@@ -8,6 +8,7 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { Logger } from '@nestjs/common';
+import { Socket } from 'socket.io';
 
 @WebSocketGateway({ namespace: 'chatting' }) // namespace 를 옵션으로 설정해줄 수 있음
 export class ChatsGateway
@@ -20,7 +21,7 @@ export class ChatsGateway
   @SubscribeMessage('new_user')
   findNewUser(
     @MessageBody() username: string, // client에서 보낸 메세지.
-    @ConnectedSocket() socket, // 연결된 소켓. 연결이 끊기기 전까지는 동일한 id로 연결이 유지된다. 그래서 연결된 user를 식별할 수 있다
+    @ConnectedSocket() socket: Socket, // 연결된 소켓. 연결이 끊기기 전까지는 동일한 id로 연결이 유지된다. 그래서 연결된 user를 식별할 수 있다
   ): string {
     console.log(`username is... ${username}`);
     console.log(`socket id is... ${socket.id}`);
@@ -30,6 +31,14 @@ export class ChatsGateway
     socket.broadcast.emit('user_connected', username);
 
     return username; // client에서 new_user를 emit 시킨 함수의 callback 함수로 받을 수 있다
+  }
+
+  @SubscribeMessage('submit_chat')
+  handleSubmitChat(@MessageBody() chat, @ConnectedSocket() socket: Socket) {
+    socket.broadcast.emit('new_chat', {
+      username: socket.id,
+      chat,
+    });
   }
 
   // gateway life cycle
@@ -43,12 +52,12 @@ export class ChatsGateway
   }
 
   //OnGatewayConnection 인터페이스 구현
-  handleConnection(@ConnectedSocket() socket): any {
+  handleConnection(@ConnectedSocket() socket: Socket): void {
     this.logger.log(`connected...${socket.id} ${socket.nsp.name}`); // client와 연결이 된 이후에 실행됨.
   }
 
   //OnGatewayDisconnect 인터페이스 구현
-  handleDisconnect(@ConnectedSocket() socket): any {
+  handleDisconnect(@ConnectedSocket() socket: Socket): void {
     this.logger.log(`disconnected...${socket.id} ${socket.nsp.name}`); // client와 연결이 끊어진 이후에 실행됨.
   }
 }

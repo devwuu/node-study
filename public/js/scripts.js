@@ -44,6 +44,10 @@ socket.on('user_connected', (username) => {
   drawChatBox(`${username} connected...`);
 });
 
+socket.on('user_disconnected', (username) => {
+  drawChatBox(`${username} disconnected...`);
+});
+
 socket.on('new_chat', (data) => {
   const { username, chat } = data;
   drawChatBox(`${username} : ${chat}`);

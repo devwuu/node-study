@@ -9,8 +9,8 @@ import {
   OneToMany,
 } from 'typeorm'
 import { VisitorEntity } from '../visitors/visitors.entity'
-import { UserEntity } from 'src/users/users.entity'
-import { TagEntity } from 'src/tags/tags.entity'
+import { UserEntity } from '../users/users.entity'
+import { TagEntity } from '../tags/tags.entity'
 
 @Entity({
   name: 'BLOG',

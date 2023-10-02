@@ -51,7 +51,7 @@ export class UsersController {
       userLoginDTO.email,
       userLoginDTO.password,
     )
-    response.cookie('jwt', jwt, { httpOnly: true }) // jwt token을 쿠키(header)에 담아서 보낸다
+    response.cookie('jwt', jwt, { httpOnly: true }).status(200) // jwt token을 쿠키(header)에 담아서 보낸다
     return user
   }
 

@@ -32,7 +32,7 @@ export class UsersController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(OnlyPrivateInterceptor)
+  @UseInterceptors(OnlyPrivateInterceptor) // 로그인된 user가 아닐 경우 401 에러
   async getCurrentUser(@CurrentUser() currentUser: UserDTO) {
     return currentUser
   }
@@ -51,12 +51,12 @@ export class UsersController {
       userLoginDTO.email,
       userLoginDTO.password,
     )
-    response.cookie('jwt', jwt, { httpOnly: true })
+    response.cookie('jwt', jwt, { httpOnly: true }) // jwt token을 쿠키(header)에 담아서 보낸다
     return user
   }
 
   @Post('logout')
   async logOut(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('jwt')
+    response.clearCookie('jwt') // 쿠키(header)에 담긴 jwt token을 제거
   }
 }

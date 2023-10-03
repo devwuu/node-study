@@ -20,7 +20,7 @@ export class UserEntity extends CommonEntity {
   @Column({ type: 'varchar', nullable: false })
   username: string
 
-  @Exclude()
+  @Exclude() // serialize 할 때 해당 필드는 제외한다 그래서 혹시 응답에 해당 필드가 포함되는 일이 없도록 한다
   @Column({ type: 'varchar', nullable: false })
   password: string
 

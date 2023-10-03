@@ -6,14 +6,14 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { AppController } from './app.controller'
 import { UserEntity } from './users/users.entity'
 import { UsersModule } from './users/users.module'
-import { BlogsModule } from './blogs/blogs.module'
-import { TagsModule } from './tags/tags.module'
-import { VisitorsModule } from './visitors/visitors.module'
-import { ProfilesModule } from './profiles/profiles.module'
 import { ProfileEntity } from './profiles/profiles.entity'
 import { BlogEntity } from './blogs/blogs.entity'
 import { VisitorEntity } from './visitors/visitors.entity'
 import { TagEntity } from './tags/tags.entity'
+import { BlogsModule } from './blogs/blogs.module'
+import { TagsModule } from './tags/tags.module'
+import { VisitorsModule } from './visitors/visitors.module'
+import { ProfilesModule } from './profiles/profiles.module'
 
 const typeOrmModuleOptions = {
   useFactory: async (

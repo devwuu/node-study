@@ -55,7 +55,7 @@ export class UsersController {
     return user
   }
 
-  @Post('logout')
+  @Post('logout') // passthrough: 쿠키, 헤더 등을 특정 상황에 맞게 조작이 가능하게 하는 옵션
   async logOut(@Res({ passthrough: true }) response: Response) {
     response.clearCookie('jwt') // 쿠키(header)에 담긴 jwt token을 제거
   }

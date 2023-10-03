@@ -8,8 +8,9 @@ import { IsUUID } from 'class-validator'
 import { Exclude } from 'class-transformer'
 
 export abstract class CommonEntity {
+  // typeorm 에서 base entity라는 이름의 entity를 제공해주기 때문에 헷갈리지 않게 common으로 함
   @IsUUID()
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid') // uuid로 id 자동생성
   id: string
 
   // 해당 열이 추가된 시각을 자동으로 기록

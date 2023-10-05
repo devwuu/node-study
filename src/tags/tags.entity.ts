@@ -1,7 +1,6 @@
 import { CommonEntity } from '../common/entities/common.entity'
 import { Column, Entity, ManyToMany } from 'typeorm'
 import { BlogEntity } from '../blogs/blogs.entity'
-import { JoinTable } from 'typeorm/browser'
 
 @Entity({
   name: 'TAG',

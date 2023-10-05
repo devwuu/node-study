@@ -8,9 +8,9 @@ import {
   OneToMany,
 } from 'typeorm'
 import { UserEntity } from '../users/users.entity'
-import { VisitorEntity } from '../visitors/visitors.entity'
 import { TagEntity } from '../tags/tags.entity'
 import { JoinTable } from 'typeorm/browser'
+import { VisitorEntity } from '../visitors/entities/visitor.entity'
 
 @Entity({
   name: 'BLOG', // 테이블명

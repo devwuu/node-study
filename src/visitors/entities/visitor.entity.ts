@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
-import { IsIP, isIP, IsNotEmpty, isNotEmpty } from 'class-validator'
-import { CommonEntity } from '../common/entities/common.entity'
-import { BlogEntity } from '../blogs/blogs.entity'
+import { CommonEntity } from '../../common/entities/common.entity'
+import { IsIP, IsNotEmpty } from 'class-validator'
+import { BlogEntity } from '../../blogs/blogs.entity'
 
 @Entity({
   name: 'VISITOR',

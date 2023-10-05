@@ -30,14 +30,16 @@ export class UserEntity extends CommonEntity {
 
   //* Relation */
 
-  @OneToOne(() => ProfileEntity) // 단방향 연결, 양방향도 가능
-  @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
+  @OneToOne(() => ProfileEntity) // 단방향 연결(하나의 entity에 작성), 양방향도 가능(두개의 entity에 작성)
+  @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' }) // 조인컬럼은 한 쪽에만 작성한다 name은 내 테이블에 저장될 컬럼 이름, referencedColumnName 은 상대편 테이블 컬럼 이름
   profile: ProfileEntity
 
+  // inverseSide : 상대편 Entity를 받아서 맵핑될 필드를 넣어준다
+  // 다대일, 일대다 관계에서 필수
   @OneToMany(() => BlogEntity, (blog: BlogEntity) => blog.author, {
     cascade: true, // 사용자를 통해 블로그가 추가, 수정, 삭제되고 사용자가 저장되면 추가된 블로그도 저장된다.
   })
-  blogs: BlogEntity[]
+  blogs: BlogEntity[] // 가상컬럼. 실제 DB에 저장되진 않는다
 }
 
 /*
